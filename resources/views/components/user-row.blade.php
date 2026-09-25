@@ -1,0 +1,1 @@
+<div class="pa-user-row" data-search-item><div class="pa-avatar">{{ $initials }}</div><div><strong>{{ $name }}</strong><span>{{ $role }}</span></div><button class="pa-more-button" aria-label="Actions pour {{ $name }}">⋮</button></div>
