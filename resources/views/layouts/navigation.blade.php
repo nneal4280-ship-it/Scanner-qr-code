@@ -7,12 +7,13 @@
         @if($role === 'personnel')
             <a href="{{ route('attendance.history') }}">Historique</a><a href="{{ route('profile.edit') }}">Profil</a>
         @elseif(in_array($role, ['responsable_personnel','chef_centre']))
+            @if($role === 'responsable_personnel')<a href="{{ route('attendance.qr-management') }}">QR codes</a>@endif
             <a href="{{ route('supervision.dashboard') }}">Suivi</a><a href="{{ route('reports.index') }}">Rapports</a>
         @else
             <a href="{{ route('admin.dashboard') }}">Utilisateurs</a><a href="{{ route('reports.index') }}">Rapports</a>
         @endif
     </nav>
-    <div class="pa-top-actions"><button class="pa-icon-button" type="button" data-theme-toggle aria-label="Changer le thème">☼</button><div class="pa-avatar">{{ collect(explode(' ', $currentUser->name ?? 'U'))->map(fn($part) => strtoupper(substr($part, 0, 1)))->join('') }}</div><form method="POST" action="{{ route('logout') }}" class="pa-logout-form">@csrf<button class="pa-text-button" type="submit">Sortir</button></form></div>
+    <div class="pa-top-actions"><button class="pa-icon-button" type="button" data-theme-toggle aria-label="Changer le thème">☼</button><div class="pa-avatar">{{ collect(explode(' ', $currentUser->name ?? 'U'))->map(fn($part) => strtoupper(substr($part, 0, 1)))->join('') }}</div><form method="POST" action="{{ route('logout') }}" class="pa-logout-form">@csrf<button class="pa-text-button" type="submit">Se déconnecter</button></form></div>
 </header>
 <nav class="pa-bottom-nav" aria-label="Navigation mobile">
     <a class="{{ request()->routeIs('dashboard') ? 'is-active' : '' }}" href="{{ route('dashboard') }}"><span>⌂</span>Accueil</a>

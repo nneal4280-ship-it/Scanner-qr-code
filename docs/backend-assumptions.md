@@ -2,6 +2,9 @@
 
 | Décision | Raison | Impact | Alternative |
 | --- | --- | --- | --- |
+| QR journalier par site et par date serveur | Le système possède des sites et le prompt impose un QR du jour | Un seul QR actif utilisable par site/date; régénération par désactivation logique | QR global si le métier confirme un seul contexte |
+| Token QR réutilisable pendant sa journée | Plusieurs employés et les deux types de pointage doivent scanner le même QR | Le rejeu est contrôlé par la règle entrée/sortie par utilisateur et par jour | Consommer le token au premier scan, incompatible avec le besoin collectif |
+| Responsable du personnel seul créateur | Rôle métier explicitement désigné dans le prompt | Policy centralisée, employés en lecture/utilisation uniquement | Autoriser chef/admin, non retenu par défaut |
 | Utiliser `users.role` pour les héritages UML | Breeze fournit déjà `users`; le diagramme ne définit pas de tables de sous-classes | Pas de duplication d'identités; policy centralisée | Tables `personnel`, `responsables`, etc. |
 | Ajouter `users.supervisor_id` | Nécessaire pour le périmètre du responsable, absent du diagramme | Un responsable voit ses collaborateurs directs | Table d'équipes dédiée |
 | Créer `profiles` en relation 1–1 | La classe Profil et ses attributs sont visibles, mais ses cardinalités sont ambiguës | Profil métier séparé des données Breeze | Ajouter les champs directement à `users` |

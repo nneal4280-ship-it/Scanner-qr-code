@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\UserRole;
+use App\Enums\AttendanceStatus;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -25,6 +26,7 @@ class User extends Authenticatable
         'password',
         'role',
         'supervisor_id',
+        'attendance_status',
     ];
 
     /**
@@ -48,6 +50,7 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'role' => UserRole::class,
+            'attendance_status' => AttendanceStatus::class,
         ];
     }
 
@@ -57,6 +60,7 @@ class User extends Authenticatable
     public function pointages() { return $this->hasMany(Pointage::class); }
     public function justificatifs() { return $this->hasMany(Justificatif::class); }
     public function generatedReports() { return $this->hasMany(Rapport::class, 'generated_by'); }
+    public function createdQrTokens() { return $this->hasMany(QrToken::class, 'created_by'); }
 
     public function isRole(UserRole ...$roles): bool
     {

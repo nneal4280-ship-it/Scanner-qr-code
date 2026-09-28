@@ -5,11 +5,17 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
 class PasswordController extends Controller
 {
+    public function edit(): View
+    {
+        return view('settings.password');
+    }
+
     /**
      * Update the user's password.
      */
@@ -24,6 +30,8 @@ class PasswordController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
-        return back()->with('status', 'password-updated');
+        $request->session()->regenerate();
+
+        return back()->with('status', 'Mot de passe modifié avec succès.');
     }
 }

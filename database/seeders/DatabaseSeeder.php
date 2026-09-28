@@ -14,6 +14,7 @@ use App\Models\Profile;
 use App\Models\Rapport;
 use App\Models\Site;
 use App\Models\User;
+use App\Services\QrCodeService;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -38,7 +39,8 @@ class DatabaseSeeder extends Seeder
         Profile::updateOrCreate(['user_id' => $employee->id], ['first_name' => 'Test', 'last_name' => 'User', 'created_on' => today()]);
         Profile::updateOrCreate(['user_id' => $responsible->id], ['first_name' => 'Responsable', 'last_name' => 'Test', 'created_on' => today()]);
 
-        $site = Site::updateOrCreate(['name' => 'Centre principal'], ['latitude' => 3.8480, 'longitude' => 11.5021, 'radius_meters' => 250, 'is_active' => true]);
+        $site = Site::updateOrCreate(['name' => 'Centre principal'], ['latitude' => 4.0503060, 'longitude' => 9.6940653, 'radius_meters' => 250, 'is_active' => true]);
+        app(QrCodeService::class)->createDaily($site, $responsible);
         $arrival = Pointage::firstOrCreate(['user_id' => $employee->id, 'type' => AttendanceType::Arrival, 'occurred_at' => Carbon::today()->setTime(8, 0)], ['site_id' => $site->id, 'latitude' => $site->latitude, 'longitude' => $site->longitude, 'distance_meters' => 0, 'within_geofence' => true]);
         Pointage::firstOrCreate(['user_id' => $employee->id, 'type' => AttendanceType::Departure, 'occurred_at' => Carbon::today()->setTime(17, 0)], ['site_id' => $site->id, 'latitude' => $site->latitude, 'longitude' => $site->longitude, 'distance_meters' => 0, 'within_geofence' => true]);
 

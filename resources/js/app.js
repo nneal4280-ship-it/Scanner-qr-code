@@ -3,6 +3,7 @@ import './bootstrap';
 import Alpine from 'alpinejs';
 import QrScanner from 'qr-scanner';
 import QrScannerWorkerPath from 'qr-scanner/qr-scanner-worker.min.js?url';
+import QRCode from 'qrcode';
 
 window.Alpine = Alpine;
 QrScanner.WORKER_PATH = QrScannerWorkerPath;
@@ -11,19 +12,23 @@ Alpine.start();
 
 document.addEventListener('DOMContentLoaded', () => {
     const body = document.querySelector('.pa-body');
-    const savedTheme = localStorage.getItem('pointage-theme');
-    if (savedTheme === 'dark') body?.classList.add('pa-dark');
-
-    document.querySelectorAll('[data-theme-toggle], [data-theme-dark]').forEach((button) => {
-        button.addEventListener('click', () => {
-            body?.classList.add('pa-dark');
-            localStorage.setItem('pointage-theme', 'dark');
+    const setTheme = (theme) => {
+        const dark = theme === 'dark';
+        body?.classList.toggle('pa-dark', dark);
+        document.documentElement.classList.toggle('pa-dark', dark);
+        localStorage.setItem('pointage-theme', dark ? 'dark' : 'light');
+        document.querySelectorAll('[data-theme-toggle]').forEach((button) => {
+            button.setAttribute('aria-pressed', String(dark));
+            button.setAttribute('aria-label', dark ? 'Activer le mode clair' : 'Activer le mode sombre');
         });
-    });
-    document.querySelectorAll('[data-theme-light]').forEach((button) => button.addEventListener('click', () => {
-        body?.classList.remove('pa-dark');
-        localStorage.setItem('pointage-theme', 'light');
-    }));
+        document.querySelectorAll('[data-theme-dark]').forEach((button) => button.setAttribute('aria-pressed', String(dark)));
+        document.querySelectorAll('[data-theme-light]').forEach((button) => button.setAttribute('aria-pressed', String(!dark)));
+    };
+    setTheme(localStorage.getItem('pointage-theme') === 'dark' ? 'dark' : 'light');
+
+    document.querySelectorAll('[data-theme-toggle]').forEach((button) => button.addEventListener('click', () => setTheme(body?.classList.contains('pa-dark') ? 'light' : 'dark')));
+    document.querySelectorAll('[data-theme-dark]').forEach((button) => button.addEventListener('click', () => setTheme('dark')));
+    document.querySelectorAll('[data-theme-light]').forEach((button) => button.addEventListener('click', () => setTheme('light')));
 
     document.querySelectorAll('[data-toast]').forEach((button) => button.addEventListener('click', () => showToast(button.dataset.toast)));
     document.querySelectorAll('input[type="password"]').forEach((input) => {
@@ -59,6 +64,21 @@ document.addEventListener('DOMContentLoaded', () => {
         registerLink.className = 'pa-auth-switch';
         registerLink.textContent = 'Créer un compte';
         authCard.appendChild(registerLink);
+    }
+
+    const qrCanvas = document.querySelector('[data-qr-token]');
+    if (qrCanvas) {
+        QRCode.toCanvas(qrCanvas, qrCanvas.dataset.qrToken, { width: 280, margin: 2, errorCorrectionLevel: 'M' }).catch(() => {});
+        document.querySelector('[data-qr-download]')?.addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.download = 'qr-presence-' + qrCanvas.dataset.qrDate.split('/').reverse().join('-') + '.png';
+            link.href = qrCanvas.toDataURL('image/png');
+            link.click();
+        });
+        document.querySelector('[data-qr-print]')?.addEventListener('click', () => window.print());
+        document.querySelector('[data-qr-export-form]')?.addEventListener('submit', (event) => {
+            event.currentTarget.querySelector('[data-qr-image]').value = qrCanvas.toDataURL('image/png');
+        });
     }
 
     document.querySelectorAll('[data-list-search]').forEach((input) => input.addEventListener('input', () => {
