@@ -1,6 +1,6 @@
 <x-guest-layout>
     <div class="pa-auth-shell">
-        <div class="pa-auth-brand"><span class="pa-brand-mark">◷</span><h1>PointageApp</h1><p>Système de gestion des présences</p></div>
+        <div class="pa-auth-brand"><x-brand-logo class="pa-auth-logo" /><h1>PointageApp</h1><p>Système de gestion des présences</p></div>
         <div class="pa-auth-card">
             <h2>Créer un compte</h2>
             <form method="POST" action="{{ route('register') }}" class="pa-form">

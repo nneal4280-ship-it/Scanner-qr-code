@@ -26,6 +26,7 @@ class PublicPagesTest extends TestCase
         $response->assertOk()
             ->assertSee('PointageApp')
             ->assertSee('Bienvenue')
+            ->assertDontSee('Créer un compte')
             ->assertSee('href="'.route('login').'"', false);
     }
 }

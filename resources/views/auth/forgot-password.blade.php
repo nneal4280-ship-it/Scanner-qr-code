@@ -1,6 +1,6 @@
 <x-guest-layout>
     <div class="pa-auth-shell">
-        <div class="pa-auth-brand"><span class="pa-brand-mark">◷</span><h1>PointageApp</h1><p>Système de gestion des présences</p></div>
+        <div class="pa-auth-brand"><x-brand-logo class="pa-auth-logo" /><h1>PointageApp</h1><p>Système de gestion des présences</p></div>
         <div class="pa-auth-card">
             <h2>Mot de passe oublié</h2>
             <p class="pa-muted">Indiquez votre adresse email pour recevoir un lien de réinitialisation.</p>

@@ -24,8 +24,8 @@
             .pa-landing-body{min-height:100vh;margin:0;background:#fbfbfa;color:#151515;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}.pa-landing-body>main:not(.pa-landing){display:none}.pa-landing{display:flex!important;flex-direction:column;justify-content:center;width:min(100%,620px);min-height:100vh;margin:auto;padding:34px 18px;text-align:center}.pa-landing-brand{display:flex;flex-direction:column;align-items:center;margin-bottom:30px}.pa-landing-mark{width:82px;height:82px;display:grid;place-items:center;border-radius:25px;background:#eaf4dc;color:#326f0d;font-size:48px;line-height:1;margin-bottom:22px}.pa-landing h1{font-size:34px;letter-spacing:-.055em;margin:0 0 8px}.pa-landing-lead{margin:0;color:#666;font-size:19px}.pa-landing-card{background:#fff;border:1px solid #e3e3e0;border-radius:24px;padding:30px 28px;box-shadow:0 14px 38px rgba(20,36,10,.04)}.pa-landing-card h2{font-size:24px;letter-spacing:-.04em;margin:0 0 12px}.pa-landing-card p{color:#777;line-height:1.6;margin:0 auto 24px;max-width:430px}.pa-landing-actions{display:grid;gap:11px}.pa-landing-button{display:flex;align-items:center;justify-content:center;min-height:51px;border-radius:13px;font-weight:650;text-decoration:none;transition:transform .15s ease,background .15s ease}.pa-landing-button:hover{transform:translateY(-1px)}.pa-landing-primary{background:#326f0d;color:#fff}.pa-landing-primary:hover{background:#1f4b08}.pa-landing-secondary{border:1px solid #e3e3e0;color:#326f0d;background:#fff}.pa-landing-features{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}.pa-landing-feature{padding:16px 8px;border-radius:16px;background:#f4f8ee;color:#326f0d;font-size:13px}.pa-landing-feature span{display:block;font-size:24px;margin-bottom:7px}.pa-landing-footer{margin:28px 0 0;color:#999;font-size:14px}@media(max-width:500px){.pa-landing{padding:25px 15px}.pa-landing h1{font-size:30px}.pa-landing-lead{font-size:17px}.pa-landing-card{padding:25px 19px}.pa-landing-features{grid-template-columns:1fr}.pa-landing-feature{padding:12px}}
         </style>
         <main class="pa-landing">
-            <div class="pa-landing-brand"><div class="pa-landing-mark">◷</div><h1>PointageApp</h1><p class="pa-landing-lead">Système de gestion des présences</p></div>
-            <section class="pa-landing-card"><h2>Bienvenue</h2><p>Gérez simplement les présences, les justificatifs et les rapports de votre organisation depuis un seul espace.</p><div class="pa-landing-actions"><a class="pa-landing-button pa-landing-primary" href="{{ route('login') }}">Se connecter</a>@if (Route::has('register'))<a class="pa-landing-button pa-landing-secondary" href="{{ route('register') }}">Créer un compte</a>@endif</div></section>
+            <div class="pa-landing-brand"><x-brand-logo class="pa-landing-logo" /><h1>PointageApp</h1><p class="pa-landing-lead">Système de gestion des présences</p></div>
+            <section class="pa-landing-card"><h2>Bienvenue</h2><p>Gérez simplement les présences, les justificatifs et les rapports de votre organisation depuis un seul espace.</p><div class="pa-landing-actions"><a class="pa-landing-button pa-landing-primary" href="{{ route('login') }}">Se connecter</a></div></section>
             <div class="pa-landing-features"><div class="pa-landing-feature"><span>✓</span>Pointage sécurisé</div><div class="pa-landing-feature"><span>▧</span>Suivi des absences</div><div class="pa-landing-feature"><span>▥</span>Rapports clairs</div></div>
             <p class="pa-landing-footer">CENADI Douala</p>
         </main>
@@ -47,13 +47,6 @@
                             Log in
                         </a>
 
-                        @if (Route::has('register'))
-                            <a
-                                href="{{ route('register') }}"
-                                class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal">
-                                Register
-                            </a>
-                        @endif
                     @endauth
                 </nav>
             @endif

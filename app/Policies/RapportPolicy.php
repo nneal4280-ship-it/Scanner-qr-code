@@ -8,7 +8,7 @@ use App\Models\User;
 
 class RapportPolicy
 {
-    public function viewAny(User $user): bool { return $user->isRole(UserRole::ResponsablePersonnel, UserRole::ChefCentre, UserRole::Administrateur); }
-    public function create(User $user): bool { return $user->isRole(UserRole::ResponsablePersonnel, UserRole::ChefCentre, UserRole::Administrateur); }
-    public function validate(User $user, Rapport $rapport): bool { return $user->isRole(UserRole::ChefCentre, UserRole::Administrateur); }
+    public function viewAny(User $user): bool { return $user->isRole(UserRole::ResponsablePersonnel); }
+    public function create(User $user): bool { return $user->isRole(UserRole::ResponsablePersonnel); }
+    public function validate(User $user, Rapport $rapport): bool { return $user->isRole(UserRole::ResponsablePersonnel); }
 }

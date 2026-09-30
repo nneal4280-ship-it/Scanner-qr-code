@@ -55,17 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
         wrapper.appendChild(toggle);
     });
 
-    const loginForm = document.querySelector('form[action$="/login"]');
-    const authCard = loginForm?.closest('.pa-auth-card');
-    if (loginForm && authCard && !authCard.querySelector('[data-register-link]')) {
-        const registerLink = document.createElement('a');
-        registerLink.href = loginForm.action.replace(/\/login\/?$/, '/register');
-        registerLink.dataset.registerLink = 'true';
-        registerLink.className = 'pa-auth-switch';
-        registerLink.textContent = 'Créer un compte';
-        authCard.appendChild(registerLink);
-    }
-
     const qrCanvas = document.querySelector('[data-qr-token]');
     if (qrCanvas) {
         QRCode.toCanvas(qrCanvas, qrCanvas.dataset.qrToken, { width: 280, margin: 2, errorCorrectionLevel: 'M' }).catch(() => {});

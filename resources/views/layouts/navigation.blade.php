@@ -1,16 +1,16 @@
 @php($currentUser = auth()->user())
 @php($role = $currentUser?->role?->value ?? 'personnel')
 <header class="pa-topbar">
-    <a class="pa-brand" href="{{ route('dashboard') }}"><span class="pa-brand-mark">◷</span><span>Pointage<span>App</span></span></a>
+    <a class="pa-brand" href="{{ route('dashboard') }}"><x-brand-logo class="pa-nav-logo" /><span>Pointage<span>App</span></span></a>
     <nav class="pa-desktop-nav" aria-label="Navigation principale">
         <a class="{{ request()->routeIs('dashboard') ? 'is-active' : '' }}" href="{{ route('dashboard') }}">Accueil</a>
         @if($role === 'personnel')
             <a href="{{ route('attendance.history') }}">Historique</a><a href="{{ route('profile.edit') }}">Profil</a>
         @elseif(in_array($role, ['responsable_personnel','chef_centre']))
             @if($role === 'responsable_personnel')<a href="{{ route('attendance.qr-management') }}">QR codes</a>@endif
-            <a href="{{ route('supervision.dashboard') }}">Suivi</a><a href="{{ route('reports.index') }}">Rapports</a>
+            <a href="{{ route('supervision.dashboard') }}">Suivi</a>@if($role === 'responsable_personnel')<a href="{{ route('reports.index') }}">Rapports</a>@endif
         @else
-            <a href="{{ route('admin.dashboard') }}">Utilisateurs</a><a href="{{ route('reports.index') }}">Rapports</a>
+            <a href="{{ route('admin.dashboard') }}">Utilisateurs</a>
         @endif
     </nav>
     <div class="pa-top-actions"><button class="pa-icon-button" type="button" data-theme-toggle aria-label="Changer le thème">☼</button><div class="pa-avatar">{{ collect(explode(' ', $currentUser->name ?? 'U'))->map(fn($part) => strtoupper(substr($part, 0, 1)))->join('') }}</div><form method="POST" action="{{ route('logout') }}" class="pa-logout-form">@csrf<button class="pa-text-button" type="submit">Se déconnecter</button></form></div>
@@ -20,7 +20,7 @@
     @if($role === 'personnel')
         <a class="{{ request()->routeIs('attendance.*') ? 'is-active' : '' }}" href="{{ route('attendance.history') }}"><span>◴</span>Historique</a><a href="{{ route('profile.edit') }}"><span>♙</span>Profil</a>
     @else
-        <a href="{{ $role === 'administrateur' ? route('admin.dashboard') : route('supervision.dashboard') }}"><span>▦</span>{{ $role === 'administrateur' ? 'Utilisateurs' : 'Suivi' }}</a><a href="{{ route('reports.index') }}"><span>▥</span>Rapports</a>
+        <a href="{{ $role === 'administrateur' ? route('admin.dashboard') : route('supervision.dashboard') }}"><span>▦</span>{{ $role === 'administrateur' ? 'Utilisateurs' : 'Suivi' }}</a>@if($role === 'responsable_personnel')<a href="{{ route('reports.index') }}"><span>▥</span>Rapports</a>@endif
     @endif
 </nav>
 {{-- Legacy Breeze navigation is intentionally kept below only as source context in this migration. --}}
